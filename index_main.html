@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Gesture Drawing</title>
+    <style>
+        body { text-align: center; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+        .container { display: flex; }
+        img, canvas { border: 2px solid black; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Hand Gesture Drawing</h1>
+    <div class="container">
+        <img id="video-feed" src="http://localhost:5000/video_feed" height="700" width="auto"/>
+        <canvas id="drawing-canvas" width="1000" height="700"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("drawing-canvas");
+        const ctx = canvas.getContext("2d");
+        let isDrawing = false;
+        
+        const socket = new WebSocket("ws://localhost:3001");
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const x = data.x * canvas.width;
+            const y = data.y * canvas.height;
+
+            if (!isDrawing) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                isDrawing = true;
+            } else {
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket closed.");
+        };
+
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+    </script>
+</body>
+</html>

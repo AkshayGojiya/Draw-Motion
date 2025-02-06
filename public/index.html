@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Gesture Drawing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center min-h-screen">
+    <header class="w-full p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold"></h1>
+        <h1 class="text-2xl font-bold">Draw Motion</h1>
+        <button id="login-btn" class="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">Login</button>
+        <div id="profile-section" class="hidden flex items-center">
+            <span id="user-name" class="mr-4"></span>
+            <button id="logout-btn" class="bg-red-500 px-4 py-2 rounded hover:bg-red-700">Logout</button>
+        </div>
+    </header>
+    
+    <div class="flex p-6 gap-6">
+        <img id="video-feed" src="http://localhost:5000/video_feed" height="600" width="800" class="border border-gray-700 rounded-lg shadow-lg" />
+        <canvas id="drawing-canvas" width="800" height="600" class="border border-gray-700 rounded-lg shadow-lg"></canvas>
+    </div>
+    
+    <!-- Login Popup -->
+    <div id="login-popup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-xl font-bold mb-4">Login</h2>
+            <input type="text" id="username" placeholder="Username" class="w-full p-2 mb-2 bg-gray-700 rounded">
+            <input type="password" id="password" placeholder="Password" class="w-full p-2 mb-4 bg-gray-700 rounded">
+            <button id="submit-login" class="w-full bg-green-500 p-2 rounded hover:bg-green-700">Login</button>
+        </div>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById("drawing-canvas");
+        const ctx = canvas.getContext("2d");
+        let isDrawing = false;
+        
+        const socket = new WebSocket("ws://localhost:3001");
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const x = data.x * canvas.width;
+            const y = data.y * canvas.height;
+
+            if (!isDrawing) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                isDrawing = true;
+            } else {
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+        };
+
+        document.getElementById("login-btn").addEventListener("click", () => {
+            document.getElementById("login-popup").classList.remove("hidden");
+        });
+
+        document.getElementById("submit-login").addEventListener("click", async () => {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            try {
+                const response = await axios.post("http://localhost:3000/login", { username, password });
+                if (response.data.success) {
+                    localStorage.setItem("user", JSON.stringify(response.data.user));
+                    location.reload();
+                } else {
+                    Swal.fire("Error", "Invalid credentials", "error");
+                }
+            } catch (error) {
+                Swal.fire("Error", "Server error", "error");
+            }
+        });
+
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            localStorage.removeItem("user");
+            location.reload();
+        });
+
+        window.onload = () => {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user) {
+                document.getElementById("login-btn").classList.add("hidden");
+                document.getElementById("profile-section").classList.remove("hidden");
+                document.getElementById("user-name").innerText = user.username;
+            }
+        };
+    </script>
+</body>
+</html>
