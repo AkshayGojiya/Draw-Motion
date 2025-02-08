@@ -38,28 +38,52 @@
         const canvas = document.getElementById("drawing-canvas");
         const ctx = canvas.getContext("2d");
         let isDrawing = false;
-        
+        let lastX = null, lastY = null; // Track last drawn point
+    
         const socket = new WebSocket("ws://localhost:3001");
-
+    
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
+    
+            // Stop drawing if no hand detected
+            if (data.x === null || data.y === null) {
+                isDrawing = false;
+                lastX = null;
+                lastY = null;
+                return;
+            }
+    
+            // Convert received values to canvas coordinates
             const x = data.x * canvas.width;
             const y = data.y * canvas.height;
-
+    
             if (!isDrawing) {
-                ctx.beginPath();
-                ctx.moveTo(x, y);
+                lastX = x;
+                lastY = y;
                 isDrawing = true;
-            } else {
-                ctx.lineTo(x, y);
-                ctx.stroke();
+                return;
             }
+    
+            // Draw smooth continuous lines
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = "red"; // Change color if needed
+            ctx.lineWidth = 3;
+            ctx.stroke();
+    
+            lastX = x;
+            lastY = y;
         };
-
+    
+        socket.onclose = () => console.log("WebSocket closed.");
+        socket.onerror = (error) => console.error("WebSocket error:", error);
+    
+        // 🟢 LOGIN POPUP FUNCTIONALITY
         document.getElementById("login-btn").addEventListener("click", () => {
             document.getElementById("login-popup").classList.remove("hidden");
         });
-
+    
         document.getElementById("submit-login").addEventListener("click", async () => {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -76,12 +100,12 @@
                 Swal.fire("Error", "Server error", "error");
             }
         });
-
+    
         document.getElementById("logout-btn").addEventListener("click", () => {
             localStorage.removeItem("user");
             location.reload();
         });
-
+    
         window.onload = () => {
             const user = JSON.parse(localStorage.getItem("user"));
             if (user) {
@@ -90,6 +114,6 @@
                 document.getElementById("user-name").innerText = user.username;
             }
         };
-    </script>
+    </script>    
 </body>
 </html>
