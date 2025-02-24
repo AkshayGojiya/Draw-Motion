@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawing Studio - Draw Motion</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold">
+            <span class="gradient-text">Draw Motion</span>
+          </a>
+          <div class="flex items-center space-x-8">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/draw.html" class="nav-link">Studio</a>
+            <button id="loginBtn" class="btn btn-primary">
+              <i class="fas fa-user mr-2"></i>Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="studio-container min-h-screen pt-24 pb-12 px-6">
+      <div class="container mx-auto">
+        <div class="mb-8">
+          <h1 class="text-4xl font-bold mb-4">
+            Drawing <span class="gradient-text">Studio</span>
+          </h1>
+          <p class="text-gray-600">Create amazing artwork with your hand gestures</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Camera Feed -->
+          <div class="canvas-container">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-semibold text-gray-800">
+                <i class="fas fa-video mr-2 text-indigo-600"></i>Camera Feed
+              </h2>
+              <div class="flex space-x-2">
+                <button class="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm">
+                  <i class="fas fa-expand mr-1"></i>Fullscreen
+                </button>
+              </div>
+            </div>
+            <video
+              id="video"
+              class="w-full rounded-xl shadow-inner transform scale-x-[-1]"
+              playsinline
+              autoplay
+            ></video>
+          </div>
+
+          <!-- Drawing Canvas -->
+          <div class="canvas-container">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-semibold text-gray-800">
+                <i class="fas fa-paint-brush mr-2 text-purple-600"></i>Canvas
+              </h2>
+              <div class="flex space-x-2">
+                <button id="clearBtn" class="px-3 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-sm">
+                  <i class="fas fa-trash-alt mr-1"></i>Clear
+                </button>
+                <button id="saveBtn" class="px-3 py-1 rounded-lg bg-green-100 hover:bg-green-200 text-green-700 text-sm">
+                  <i class="fas fa-download mr-1"></i>Save
+                </button>
+              </div>
+            </div>
+            <canvas
+              id="canvas"
+              class="w-full rounded-xl shadow-inner bg-white"
+            ></canvas>
+          </div>
+        </div>
+
+        <!-- Tools Section -->
+        <div class="mt-8 bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-xl font-semibold mb-4">Drawing Tools</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+              <i class="fas fa-paint-brush text-2xl text-indigo-600 mb-2"></i>
+              <h4 class="font-medium">Brush</h4>
+            </div>
+            <div class="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+              <i class="fas fa-eraser text-2xl text-purple-600 mb-2"></i>
+              <h4 class="font-medium">Eraser</h4>
+            </div>
+            <div class="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+              <i class="fas fa-palette text-2xl text-blue-600 mb-2"></i>
+              <h4 class="font-medium">Colors</h4>
+            </div>
+            <div class="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+              <i class="fas fa-sliders-h text-2xl text-pink-600 mb-2"></i>
+              <h4 class="font-medium">Settings</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-12 mb-8">
+          <div>
+            <h4 class="text-2xl font-bold mb-4">Draw Motion</h4>
+            <p class="text-gray-400">
+              Create amazing artwork with the power of AI and hand gestures.
+            </p>
+          </div>
+          <div>
+            <h5 class="text-lg font-semibold mb-4">Quick Links</h5>
+            <ul class="space-y-2">
+              <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+              <li><a href="/draw.html" class="text-gray-400 hover:text-white transition-colors">Studio</a></li>
+              <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="text-lg font-semibold mb-4">Resources</h5>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="text-lg font-semibold mb-4">Connect</h5>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center">
+          <p class="text-gray-400">© 2024 Draw Motion. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/main.js"></script>
+    <script type="module" src="/auth.js"></script>
+  </body>
+</html>

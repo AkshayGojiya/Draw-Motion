@@ -1,0 +1,131 @@
+@import 'aos/dist/aos.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Base Styles */
+body {
+  @apply antialiased;
+}
+
+/* Button Styles */
+.btn {
+  @apply px-6 py-3 rounded-xl text-white font-semibold transition-all duration-300 relative overflow-hidden shadow-lg;
+}
+
+.btn::before {
+  content: '';
+  @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300;
+}
+
+.btn:hover::before {
+  @apply opacity-20;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #9333EA 0%, #C026D3 100%);
+}
+
+/* Navigation Styles */
+.nav-link {
+  @apply relative text-gray-700 hover:text-indigo-600 transition-colors duration-300 py-2;
+}
+
+.nav-link::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-300;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+/* Gradient Text */
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #C026D3 100%);
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* Feature Cards */
+.feature-card {
+  @apply bg-white p-8 rounded-2xl shadow-xl transform transition-all duration-500 hover:scale-105 hover:shadow-2xl border border-gray-100;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+.feature-card:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(249,250,251,1) 100%);
+}
+
+/* Modal Styles */
+.modal {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-300;
+  backdrop-filter: blur(5px);
+}
+
+.modal.active {
+  @apply opacity-100 pointer-events-auto;
+}
+
+.modal-content {
+  @apply bg-white rounded-2xl p-8 max-w-md w-full transform scale-95 transition-transform duration-300 shadow-2xl;
+  border: 1px solid rgba(79, 70, 229, 0.1);
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+.modal.active .modal-content {
+  @apply scale-100;
+}
+
+.input-field {
+  @apply w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Form Feedback */
+.form-feedback {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Loading Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fa-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Scroll Animations */
+[data-aos] {
+  pointer-events: none;
+}
+
+[data-aos].aos-animate {
+  pointer-events: auto;
+}
