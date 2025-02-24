@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.4.2",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.4.2"
   },
   "dependencies": {
     "@mediapipe/hands": "^0.4.1",
@@ -20,6 +20,8 @@
     "@tensorflow/tfjs": "^4.17.0",
     "aos": "^2.3.4",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1"
   }

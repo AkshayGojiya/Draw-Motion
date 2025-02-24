@@ -1,16 +1,20 @@
+import("dotenv").then((dotenv) => dotenv.config());
 import express from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import cors from 'cors';
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/drawmotionDB', {
+mongoose.connect('mongodb://127.0.0.1:27017/drawmotionDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+}).then(() => console.log("MongoDB Connected"))
+.catch(err => console.log("MongoDB Connection Error:", err));
 
 // User Schema
 const userSchema = new mongoose.Schema({
