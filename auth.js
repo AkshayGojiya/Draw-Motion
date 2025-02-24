@@ -152,11 +152,9 @@ registerForm?.addEventListener('submit', async (e) => {
 function updateUIForLoggedInUser() {
   if (currentUser) {
     loginBtn.innerHTML = `
-      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=4F46E5&color=fff" 
-           class="w-8 h-8 rounded-full mr-2" />
-      <span>${currentUser.name}</span>
+      Profile
     `;
-    loginBtn.classList.remove('btn-primary');
-    loginBtn.classList.add('flex', 'items-center', 'bg-white', 'text-gray-800', 'hover:bg-gray-50');
+    // loginBtn.classList.remove('btn-primary');
+    // loginBtn.classList.add('flex', 'items-center', 'bg-white', 'text-gray-800', 'hover:bg-gray-50');
   }
 }
