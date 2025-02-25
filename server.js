@@ -4,10 +4,14 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
+import { spawn } from 'child_process';
+import path from 'path';
+// app.use(express.static("public"));
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.json({ limit: "10mb" })); 
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://aksgojiya:mNIxTZMwJMgK0hln@drawmotion.tja73.mongodb.net/drawmotionDB', {
@@ -100,7 +104,27 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+const pythonProcess = spawn("python", ["main.py"]);
+let arr="";
+pythonProcess.stdout.on("data", (data) => {
+   arr=data.toString();
+   console.log("Server: " + data.toString())
+});
+app.post("/frame", (req, res) => {
+    if (req.body.image) {
+        pythonProcess.stdin.write(req.body.image + "\n");
+    }
+    res.json({ status: "received" });
+});
+app.get("/coordinates",(req,res) => {
+        res.status(201).json({ data: arr});
+})
+pythonProcess.stderr.on("data", (data) => console.error("Python Error:", data.toString()));
+
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+

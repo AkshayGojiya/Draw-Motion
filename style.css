@@ -129,3 +129,21 @@ body {
 [data-aos].aos-animate {
   pointer-events: auto;
 }
+
+#svg-container{
+  position: absolute;
+  z-index: 10;
+  background-color: transparent;
+  height: fit-content;
+  width: fit-content;
+}
+
+#drawingBoard{
+   
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+  /* transform: translate(101%,-100%); */
+  z-index: 10;
+  overflow: hidden;
+}
