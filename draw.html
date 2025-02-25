@@ -11,12 +11,13 @@
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
       <div class="container mx-auto px-6 py-4">
         <div class="flex items-center justify-between">
-          <a href="/" class="text-2xl font-bold">
+          <a href="/" class="text-3xl font-bold">
             <span class="gradient-text">Draw Motion</span>
           </a>
           <div class="flex items-center space-x-8">
             <a href="/" class="nav-link">Home</a>
             <a href="/draw.html" class="nav-link">Studio</a>
+            <a href="features" class="nav-link">Features</a>
             <button id="loginBtn" class="btn btn-primary">
               <i class="fas fa-user mr-2"></i>Login
             </button>
@@ -41,11 +42,11 @@
               <h2 class="text-xl font-semibold text-gray-800">
                 <i class="fas fa-video mr-2 text-indigo-600"></i>Camera Feed
               </h2>
-              <div class="flex space-x-2">
+              <!-- <div class="flex space-x-2">
                 <button class="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm">
                   <i class="fas fa-expand mr-1"></i>Fullscreen
                 </button>
-              </div>
+              </div> -->
             </div>
             <!-- <video
               id="video"
@@ -54,7 +55,7 @@
               autoplay
             ></video> -->
 
-            <canvas id="canvas" class="rounded-xl shadow-inner"></canvas> 
+            <canvas id="canvas" class="rounded-xl shadow-inner w-full"></canvas> 
           </div>
 
           <!-- Drawing Canvas -->
@@ -63,18 +64,32 @@
               <h2 class="text-xl font-semibold text-gray-800">
                 <i class="fas fa-paint-brush mr-2 text-purple-600"></i>Canvas
               </h2>
-              <div class="flex space-x-2">
+              <!-- <div class="flex space-x-2">
                 <button id="clearBtn" class="px-3 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-sm">
                   <i class="fas fa-trash-alt mr-1"></i>Clear
                 </button>
                 <button id="saveBtn" class="px-3 py-1 rounded-lg bg-green-100 hover:bg-green-200 text-green-700 text-sm">
                   <i class="fas fa-download mr-1"></i>Save
                 </button>
-              </div>
+              </div> -->
             </div>
-            <div id="drawingBoard">
-              <canvas id="drawingCanvas" class="rounded-xl shadow-inner"></canvas>
+            <div id="drawingBoard" class="">
+              <canvas id="drawingCanvas" class="rounded-xl shadow-inner border-2 border-purple-500 w-full"></canvas>
               <div id="svg-container"></div>
+              <div id="toolsMenu" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white shadow-lg rounded-xl p-4 space-y-4 w-16">
+                <button class="tool-btn" data-tool="brush">
+                  <i class="fas fa-paint-brush text-purple-600 text-2xl"></i>
+                </button>
+                <button class="tool-btn" data-tool="eraser">
+                  <i class="fas fa-eraser text-red-600 text-2xl"></i>
+                </button>
+                <button class="tool-btn" data-tool="colors">
+                  <i class="fas fa-palette text-blue-600 text-2xl"></i>
+                </button>
+                <button class="tool-btn" data-tool="settings">
+                  <i class="fas fa-sliders-h text-gray-600 text-2xl"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -289,6 +304,12 @@
           icon.classList.add('fa-eye');
         }
       }
+      document.querySelectorAll('.tool-button').forEach(button => {
+        button.addEventListener('click', function() {
+          document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('selected-tool'));
+          this.classList.add('selected-tool');
+        });
+      });
     </script>
 
     <script type="module" src="/main.js"></script>
