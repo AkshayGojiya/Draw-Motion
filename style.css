@@ -141,8 +141,8 @@ body {
 #drawingBoard{
    
   position: relative;
-  height: fit-content;
-  width: fit-content;
+  /* height: fit-content;
+  width: fit-content; */
   /* transform: translate(101%,-100%); */
   z-index: 10;
   overflow: hidden;
@@ -152,4 +152,8 @@ body {
   background-color: #4A90E2; 
   color: white;
   border: 2px solid #2A70C2;
+}
+
+.dispBtn {
+  display: none;
 }

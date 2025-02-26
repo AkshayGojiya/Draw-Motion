@@ -6,12 +6,34 @@ import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import { spawn } from 'child_process';
 import path from 'path';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import MongoDBStore from 'connect-mongodb-session';
 // app.use(express.static("public"));
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", 
+  credentials: true
+}));
 app.use(express.json({ limit: "10mb" })); 
+app.use(cookieParser());
+
+const MongoStore = MongoDBStore(session);
+const store = new MongoStore({
+  uri: "mongodb+srv://aksgojiya:mNIxTZMwJMgK0hln@drawmotion.tja73.mongodb.net/drawmotionDB",
+  collection: "sessions",
+});
+
+app.use(session({
+  secret: '62bd19d9ff356c926e5ac50cd4dc694b9ac151578fb049f7e95016',  // strong secret key
+  resave: false,
+  saveUninitialized: true,
+  store: store,
+  cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 } // 1-day expiration
+}));
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://aksgojiya:mNIxTZMwJMgK0hln@drawmotion.tja73.mongodb.net/drawmotionDB', {
@@ -94,6 +116,8 @@ app.post('/api/auth/login', async (req, res) => {
       { expiresIn: '24h' }
     );
 
+    req.session.user = { id: user._id, name: user.name, email: user.email };
+
     res.json({
       message: 'Logged in successfully',
       user: { id: user._id, name: user.name, email: user.email },
@@ -102,6 +126,25 @@ app.post('/api/auth/login', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
+});
+
+// Check session route
+app.get('/api/auth/check-session', (req, res) => {
+  if (req.session.user) {
+    res.json({ loggedIn: true, user: req.session.user });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
+// Logout route
+app.post('/api/auth/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ message: 'Error logging out' });
+    }
+    res.json({ message: 'Logged out successfully' });
+  });
 });
 
 const pythonProcess = spawn("python", ["main.py"]);

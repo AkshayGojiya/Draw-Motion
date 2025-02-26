@@ -15,6 +15,7 @@ let currentUser = null;
 const loginModal = document.getElementById('loginModal');
 const registerModal = document.getElementById('registerModal');
 const loginBtn = document.getElementById('loginBtn');
+const profileBtn = document.getElementById('profileBtn');
 const showRegisterBtn = document.getElementById('showRegister');
 const showLoginBtn = document.getElementById('showLogin');
 const closeButtons = document.querySelectorAll('.close-modal');
@@ -87,6 +88,7 @@ loginForm?.addEventListener('submit', async (e) => {
   try {
     const response = await fetch('http://localhost:3000/api/auth/login', {
       method: 'POST',
+      credentials: "include",
       headers: {
         'Content-Type': 'application/json',
       },
@@ -151,9 +153,9 @@ registerForm?.addEventListener('submit', async (e) => {
 
 function updateUIForLoggedInUser() {
   if (currentUser) {
-    loginBtn.innerHTML = `
-      Profile
-    `;
+    loginBtn.classList.add = `dispBtn`;
+    profileBtn.classList.remove = `dispBtn`;
+    
     // loginBtn.classList.remove('btn-primary');
     // loginBtn.classList.add('flex', 'items-center', 'bg-white', 'text-gray-800', 'hover:bg-gray-50');
   }
