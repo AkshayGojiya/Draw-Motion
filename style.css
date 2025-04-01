@@ -157,3 +157,38 @@ body {
 .dispBtn {
   display: none;
 }
+
+#historyContainer {
+  overflow-y: auto; /* Allows scrolling */
+  max-height: 400px; /* Adjust height as needed */
+  padding-right: 15px; /* Prevents content from being cut off */
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+#historyContainer::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+#historyContainer {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Edge & IE */
+#historyContainer {
+  -ms-overflow-style: none;
+}
+
+@keyframes bounceCustom {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-bounce-custom {
+  animation: bounceCustom 1s infinite ease-in-out;
+}
+
+.delay-0 { animation-delay: 0s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-400 { animation-delay: 0.4s; }

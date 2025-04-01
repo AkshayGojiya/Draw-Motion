@@ -6,8 +6,51 @@
     <title>Draw Motion - Hand Gesture Drawing</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+      @keyframes appear {
+        from { 
+          opacity:0;
+          scale: 0.5;
+        } to {
+          opacity: 1;
+          scale: 1;
+        }
+      }
+
+      .animate {
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 0 cover 30%;
+      }
+
+      .animater {
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 0 cover 10%;
+      }
+      
+    </style>
+
   </head>
   <body class="bg-gray-50">
+    <!-- <div id="loadingScreen" class="fixed top-0 left-0 w-full h-full bg-white flex items-center justify-center z-50">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+    </div> -->
+    <!-- <div id="loadingSpinner" class="flex justify-center items-center h-screen">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+    </div> -->
+    <div id="loadingSpinner" class="flex justify-center items-center h-screen bg-gray-100">
+      <div class="flex space-x-1">
+        <div class="h-3 w-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-bounce-custom delay-0"></div>
+        <div class="h-3 w-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-bounce-custom delay-200"></div>
+        <div class="h-3 w-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-bounce-custom delay-400"></div>
+      </div>
+    </div>
+    
+    
+    <div id="mainContent" class="hidden">
+    
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
       <div class="container mx-auto px-6 py-4">
         <div class="flex items-center justify-between">
@@ -17,13 +60,13 @@
           <div class="hidden md:flex items-center space-x-8">
             <a href="/" class="nav-link">Home</a>
             <a href="draw.html" class="nav-link">Studio</a>
-            <a href="features" class="nav-link">Features</a>
+            <a href="#features" class="nav-link">Features</a>
             <button id="loginBtn" class="btn btn-primary"><i class="fas fa-user mr-2"></i>Login</button>
-            <button id="profileBtn" class="btn btn-primary dispBtn">Profile</button>
+            <button id="profileBtn" class="btn btn-primary hidden"><i class="fas fa-user-circle mr-2"></i>Profile</button>
             <!-- <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=4F46E5&color=fff" 
            class="w-8 h-8 rounded-full mr-2" />
       <span>${currentUser.name}</span> -->
-          </div>
+          </div>  
         </div>
       </div>
     </nav>
@@ -44,7 +87,7 @@
               </p>
               <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <a href="/draw.html" class="btn btn-primary">Start Creating</a>
-                <a href="#demo" class="btn btn-secondary">Watch Demo</a>
+                <button id="demoBtn" class="btn btn-secondary">Watch Demo</button>
               </div>
             </div>
             <div class="md:w-1/2 mt-12 md:mt-0">
@@ -57,25 +100,25 @@
       <!-- Features Section -->
       <section id="features" class="py-24 bg-gradient-to-b from-white to-gray-50">
         <div class="container mx-auto px-6">
-          <h2 class="text-4xl font-bold text-center mb-16">
+          <h2 class="text-4xl font-bold text-center mb-16 animater">
             Why Choose <span class="gradient-text">Draw Motion</span>
           </h2>
           <div class="grid md:grid-cols-3 gap-12">
-            <div class="feature-card">
+            <div class="feature-card animate">
               <i class="fas fa-hand-pointer text-4xl text-blue-600 mb-6"></i>
               <h3 class="text-2xl font-semibold mb-4">Gesture Recognition</h3>
               <p class="text-gray-600">
                 Advanced AI technology that precisely tracks your hand movements in real-time.
               </p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card animate">
               <i class="fas fa-paint-brush text-4xl text-purple-600 mb-6"></i>
               <h3 class="text-2xl font-semibold mb-4">Creative Freedom</h3>
               <p class="text-gray-600">
                 Express yourself naturally with intuitive hand gestures and various drawing tools.
               </p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card animate">
               <i class="fas fa-cloud-upload-alt text-4xl text-blue-600 mb-6"></i>
               <h3 class="text-2xl font-semibold mb-4">Cloud Storage</h3>
               <p class="text-gray-600">
@@ -155,9 +198,6 @@
           </div>
         </div>
         <div class="border-t border-gray-800 pt-8 text-center">
-          <p class="text-gray-400">Designed and Developed by <a href="https://akshaygojiya.netlify.app/" target="_blank"><strong>Akshay Gojiya</strong></a>.</p>
-        </div>
-        <div class="pt-4 text-center">
           <p class="text-gray-400">© 2025 Draw Motion. All rights reserved.</p>
         </div>
       </div>
@@ -168,9 +208,9 @@
       <div class="modal-content">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold gradient-text">Welcome Back</h2>
-          <button class="close-modal text-gray-500 hover:text-gray-700">
+          <!-- <button class="close-modal text-gray-500 hover:text-gray-700">
             <i class="fas fa-times"></i>
-          </button>
+          </button> -->
         </div>
         <form id="loginForm" class="space-y-4">
           <div>
@@ -218,13 +258,65 @@
       </div>
     </div>
 
+    <div id="profileModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold gradient-text">Profile</h2>
+          <!-- <button class="close-modal text-gray-500 hover:text-gray-700" onclick="closeProfileModal()">
+            <i class="fas fa-times"></i>
+          </button> -->
+        </div>
+        <div class="text-center">
+          <i class="fas fa-user-circle text-6xl text-gray-700 mb-4"></i>
+          <h3 id="profileName" class="text-xl font-semibold"></h3>
+          <p id="profileEmail" class="text-gray-600"></p>
+        </div>
+        <div class="mt-6 flex flex-col gap-4">
+          <!-- <input type="file" id="imageInput" accept="image/*" class="mb-2" />
+          <button id="saveBtn" class="btn btn-secondary w-full">Save Image</button> -->
+          <button id="showHistory" class="btn btn-secondary w-full">Show History</button>
+          <button id="logoutBtn" class="btn btn-primary w-full">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="demoModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold gradient-text">Demo</h2>
+          <!-- <button class="close-modal text-gray-500 hover:text-gray-700" onclick="closeProfileModal()">
+            <i class="fas fa-times"></i>
+          </button> -->
+        </div>
+        <div class="text-center">
+          nothing to show
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="historyModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold gradient-text">History</h2>
+          <!-- <button class="close-modal text-gray-500 hover:text-gray-700" onclick="closeHistoryModal()">
+            <i class="fas fa-times"></i>
+          </button> -->
+        </div>
+        <div id="historyContainer" class="grid grid-cols-2 gap-4 overflow-y-auto max-h-96 p-4">
+          <!-- Saved images will be loaded here dynamically -->
+          <p id="noHistoryText" class="text-center text-gray-500 w-full">No History</p>
+        </div>
+      </div>
+    </div>
     <div id="registerModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold gradient-text">Create Account</h2>
-          <button class="close-modal text-gray-500 hover:text-gray-700">
+          <!-- <button class="close-modal text-gray-500 hover:text-gray-700">
             <i class="fas fa-times"></i>
-          </button>
+          </button> -->
         </div>
         <form id="registerForm" class="space-y-4">
           <div>
@@ -281,8 +373,14 @@
         </div>
       </div>
     </div>
-
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
+      AOS.init({
+        duration: 1000, // Animation duration
+        once: true, // Only animate once
+      });
+
       function togglePassword(button) {
         const input = button.parentElement.querySelector('input');
         const icon = button.querySelector('i');
@@ -297,6 +395,19 @@
           icon.classList.add('fa-eye');
         }
       }
+      document.addEventListener("DOMContentLoaded", function () {
+      const featuresLink = document.querySelector("a[href='#features']");
+      const featuresSection = document.querySelector("#features");
+
+      if (featuresLink && featuresSection) {
+        featuresLink.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          featuresSection.scrollIntoView({ behavior: "smooth" });
+        });
+      }
+    });
+
+      
     </script>
 
     <script type="module" src="/auth.js"></script>
