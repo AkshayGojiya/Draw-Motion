@@ -77,9 +77,9 @@
                 <i class="fas fa-paint-brush mr-2 text-purple-600"></i>Canvas
               </h2>
               <div class="flex space-x-2">
-                <!-- <button id="clearBtn" class="px-3 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-sm">
+                <button id="clearBtn" class="px-3 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-sm">
                   <i class="fas fa-trash-alt mr-1"></i>Clear
-                </button> -->
+                </button>
                 <button id="saveBtn" class="px-3 py-1 rounded-lg bg-green-100 hover:bg-green-200 text-green-700 text-sm">
                   <i class="fas fa-download mr-1"></i>Save
                 </button>
@@ -102,6 +102,28 @@
                   <i class="fas fa-sliders-h text-gray-600 text-2xl"></i>
                 </button>
               </div>
+              <!-- <div id="shaper"></div>
+                <div class="customTools" id="brush"></div>
+                <div class="customTools" id="brushSize"></div>
+                <div class="customTools" id="erasor"></div>
+                <div class="customTools" id="redo"></div>
+                <div class="customTools" id="undo"></div>
+                <div class="customTools" id="clearCanvas"></div>
+                <div class="size" id="size"><input id="range" type="range" min="0" max="100" /></div>
+                <div class="customTools" id="color"></div>
+                <div class="color-container" id="color-container">
+                    <div class="colorValues" id="black"></div>
+                    <div class="colorValues" id="red"></div>
+                    <div class="colorValues" id="blue"></div>
+                    <div class="colorValues" id="green"></div>
+                    <div class="colorValues" id="yellow"></div>
+                    <div class="colorValues" id="orange"></div>
+                </div>
+                <div class="customTools" id="shape"></div>
+                <div class="shape-container" id="shape-container">
+                  <div class="shapeValues" id="rectangle"><div style="width: 30px;height: 30px; border:2px solid black;"></div></div>
+                  <div class="shapeValues" id="circle"><div style="width: 30px;height: 30px; border:2px solid black;border-radius: 50%;"></div></div>
+                </div> -->
             </div>
           </div>
         </div>
@@ -179,6 +201,31 @@
         </div>
       </div>
     </footer>
+
+    <!-- custom alert box for image saving -->
+    <div id="customAlert" class="fixed top-24 right-3 flex items-center space-x-3 bg-green-900 text-white px-6 py-3 rounded-xl shadow-lg transition-all transform scale-95 opacity-0">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span class="text-lg font-semibold">Image saved successfully!</span>
+      <button onclick="hideAlert()" class="hover:text-gray-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+      </button>
+  </div>
+
+  <!-- <div id="customAlert" class="fixed top-5 right-5 flex items-center space-x-3 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transition-all transform scale-95 opacity-0 pointer-events-none">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span class="text-lg font-semibold">Image saved successfully!</span>
+    <button onclick="hideAlert()" class="hover:text-gray-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+</div> -->
 
     <div id="loginModal" class="modal">
       <div class="modal-content">

@@ -114,6 +114,25 @@ app.post("/api/history/save", async (req, res) => {
   }
 });
 
+app.delete("/api/history/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find and delete the image entry
+    const deletedImage = await History.findByIdAndDelete(id);
+    
+    if (!deletedImage) {
+      return res.status(404).json({ success: false, message: "Image not found." });
+    }
+
+    res.json({ success: true, message: "Image deleted successfully!" });
+
+  } catch (error) {
+    console.error("Error deleting history image:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
 app.get("/api/history/:userId", async (req, res) => {
   try {
     const { userId } = req.params;

@@ -280,6 +280,18 @@
       </div>
     </div>
 
+    <div id="customAlert" class="fixed top-24 right-3 flex items-center space-x-3 bg-green-900 text-white px-6 py-3 rounded-xl shadow-lg transition-all transform scale-95 opacity-0">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span class="text-lg font-semibold">Image saved successfully!</span>
+      <button onclick="hideAlert()" class="hover:text-gray-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+      </button>
+    </div>
+
     <div id="demoModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-6">

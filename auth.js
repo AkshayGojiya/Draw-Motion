@@ -293,18 +293,7 @@ const historyContainer = document.getElementById("historyContainer");
 const noHistoryText = document.getElementById("noHistoryText");
 const userId = currentUser ? currentUser.id : null;
 
-// Dummy saved images (Replace this with actual database fetch)
-const savedImages = [
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-  "/icons/demo1.webp",
-];
+
 
 // Function to load history images dynamically
 // function loadHistoryImages() {
@@ -344,7 +333,8 @@ async function loadHistoryImages() {
   }
 
   try {
-    alert(currentUser.id);
+    // noHistoryText.style.display = "block";
+    // noHistoryText.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>';
     const response = await fetch(`http://localhost:3000/api/history/${currentUser.id}`);
     const images = await response.json();
 
@@ -356,23 +346,106 @@ async function loadHistoryImages() {
     } else {
       noHistoryText.style.display = "none";
 
+      // images.forEach((image, index) => {
+      //   const wrapper = document.createElement("div");
+      //   wrapper.classList.add("text-center");
+
+      //   const img = document.createElement("img");
+      //   img.src = image.imageUrl;
+      //   img.alt = `Canvas ${index + 1}`;
+      //   img.classList.add("w-full", "h-auto", "rounded-lg", "shadow-md");
+
+      //   const label = document.createElement("p");
+      //   label.textContent = `Canvas ${index + 1}`;
+      //   label.classList.add("text-gray-700", "font-semibold", "mt-2");
+
+      //   // img.addEventListener("click", () => {setCanvasBackground(img.src)});
+      //   img.addEventListener("click", () => {
+      //     historyModal.classList.remove('active');
+      //     profileModal.classList.remove('active');
+      //     setCanvasBackground(img.src);
+      //     localStorage.setItem("savedCanvasBackground", img.src); // Save to localStorage
+      //   });
+
+      //   const deleteBtn = document.createElement("button");
+      //   deleteBtn.innerHTML = "❌"; // Unicode cross icon
+      //   // deleteBtn.classList.add(
+      //   //   "relative", "top-2", "right-2", 
+      //   //   "bg-white-500", "text-red", 
+      //   //   "w-6", "h-6", "rounded-full", 
+      //   //   "flex", "items-center", "justify-center", 
+      //   //   "text-xs", "shadow-md", "cursor-pointer", "hover:bg-white-700"
+      //   // );
+
+      //   deleteBtn.classList.add("relative", "top-2", "right-2", "bg-red-500", "text-white", "w-6", "h-6", "rounded-full", "flex", "items-center", "justify-center", "text-xs", "shadow-md", "cursor-pointer", "hover:bg-red-700");
+      //   deleteBtn.addEventListener("click", () => deleteHistoryImage(image.id, wrapper));
+        
+      //   wrapper.appendChild(img);
+      //   wrapper.appendChild(deleteBtn);
+      //   wrapper.appendChild(label);
+      //   historyContainer.appendChild(wrapper);
+      // });
+
+
       images.forEach((image, index) => {
+        // Create a wrapper div
         const wrapper = document.createElement("div");
         wrapper.classList.add("text-center");
-
+      
+        // Create the image element
         const img = document.createElement("img");
         img.src = image.imageUrl;
         img.alt = `Canvas ${index + 1}`;
-        img.classList.add("w-full", "h-auto", "rounded-lg", "shadow-md");
-
+        img.classList.add("w-full", "h-auto", "rounded-lg", "shadow-md", "cursor-pointer");
+      
+        // Click event to set background
+        img.addEventListener("click", () => {
+          historyModal.classList.remove('active');
+          profileModal.classList.remove('active');
+          setCanvasBackground(img.src);
+          localStorage.setItem("savedCanvasBackground", img.src); // Save to localStorage
+        });
+      
+        // Create a flex container for the label and delete button
+        const labelContainer = document.createElement("div");
+        labelContainer.classList.add("flex", "justify-between", "items-center", "mt-2");
+      
+        // Create the label
         const label = document.createElement("p");
         label.textContent = `Canvas ${index + 1}`;
-        label.classList.add("text-gray-700", "font-semibold", "mt-2");
-
+        label.classList.add("text-gray-700", "font-semibold");
+      
+        // Create the delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteBtn.classList.add(
+          "bg-grey-500",
+          "w-6", "h-6", "rounded",
+          "flex", "items-center", "justify-center",
+          "text-xs", "cursor-pointer"
+        );
+      
+        // Delete button click event
+        deleteBtn.addEventListener("click", (event) => {
+          event.stopPropagation(); // Prevent triggering the image click event
+          deleteHistoryImage(image._id, wrapper);
+        });
+      
+        // Append label and delete button inside labelContainer
+        labelContainer.appendChild(label);
+        labelContainer.appendChild(deleteBtn);
+      
+        // Append elements
         wrapper.appendChild(img);
-        wrapper.appendChild(label);
+        wrapper.appendChild(labelContainer); // Append flex container
         historyContainer.appendChild(wrapper);
       });
+      
+
+      const savedBackground = localStorage.getItem("savedCanvasBackground");
+      if (savedBackground) {
+        setCanvasBackground(savedBackground);
+      }
     }
   } catch (error) {
     console.error("Error fetching history:", error);
@@ -381,12 +454,78 @@ async function loadHistoryImages() {
   }
 }
 
+async function deleteHistoryImage(imageId, element) {
+  // const confirmDelete = confirm("Are you sure you want to delete this image?");
+  // if (!confirmDelete) return;
+
+  try {
+    const response = await fetch(`http://localhost:3000/api/history/delete/${imageId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" }
+    });
+
+    const result = await response.json();
+    // console.log(result);
+    if (result.success) {
+      element.remove(); // Remove from UI
+      // alert("Image deleted successfully!");
+      // const alertBox = document.getElementById("customAlert");
+      // alertBox.classList.remove("opacity-0", "scale-95");
+      // alertBox.classList.add("opacity-100", "scale-100");
+
+      // // Auto-hide after 3 seconds
+      // setTimeout(() => {
+      //     hideAlert();
+      // }, 3000);
+    } else {
+      alert(result.message);
+    }
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    alert("Failed to delete the image.");
+  }
+}
+
+
+window.addEventListener("load", () => {
+  const canvas = document.getElementById("drawingCanvas");
+  if (!canvas) return;
+  const savedBackground = localStorage.getItem("savedCanvasBackground");
+
+  if (savedBackground) {
+    setCanvasBackground(savedBackground);
+  }
+});
+
+function setCanvasBackground(imageSrc) {
+  const canvas = document.getElementById("drawingCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  const img = new Image();
+  img.src = imageSrc;
+  img.onload = function () {
+    // Resize the image to fit the canvas
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  };
+}
+
 // Load history when history modal is opened
 document.getElementById("showHistory")?.addEventListener("click", loadHistoryImages);
 
+document.getElementById("clearBtn")?.addEventListener("click", () => {
+  const canvas = document.getElementById("drawingCanvas");
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  localStorage.removeItem("savedCanvasBackground"); // Clear saved background
+});
 
 document.getElementById("saveBtn")?.addEventListener("click", async () => {
   const canvas = document.getElementById("drawingCanvas"); // Get the drawing canvas
+  // const canvas = document.getElementById("canvas"); // Get the drawing canvas
   if (!canvas) {
     alert("Canvas not found!");
     return;
@@ -412,7 +551,15 @@ document.getElementById("saveBtn")?.addEventListener("click", async () => {
 
     const data = await response.json();
     if (response.ok) {
-      alert("Image saved successfully!");
+      // alert("Image saved successfully!");
+      const alertBox = document.getElementById("customAlert");
+      alertBox.classList.remove("opacity-0", "scale-95");
+      alertBox.classList.add("opacity-100", "scale-100");
+
+      // Auto-hide after 3 seconds
+      setTimeout(() => {
+          hideAlert();
+      }, 3000);
     } else {
       alert(data.message || "Failed to save image.");
     }
@@ -421,3 +568,11 @@ document.getElementById("saveBtn")?.addEventListener("click", async () => {
     // alert("Error saving image.");
   }
 });
+
+
+
+function hideAlert() {
+  const alertBox = document.getElementById("customAlert");
+  alertBox.classList.remove("opacity-100", "scale-100");
+  alertBox.classList.add("opacity-0", "scale-95");
+}
