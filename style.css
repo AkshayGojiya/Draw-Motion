@@ -132,17 +132,17 @@ body {
 
 #svg-container{
   position: absolute;
-  z-index: 10;
+  z-index: 50;
   background-color: transparent;
+  transform: translate(-50%,-50%);
   height: fit-content;
   width: fit-content;
 }
-
 #drawingBoard{
    
   position: relative;
-  /* height: fit-content;
-  width: fit-content; */
+  height: fit-content;
+  width: fit-content;
   /* transform: translate(101%,-100%); */
   z-index: 10;
   overflow: hidden;
@@ -153,6 +153,148 @@ body {
   color: white;
   border: 2px solid #2A70C2;
 }
+
+
+.customTools {
+  position: absolute;
+  height: 55px;
+  width: 55px;
+  right: 30px;
+  top: 0px;
+  z-index: 11;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7); /* Optional background */
+}
+
+
+/* Style the Font Awesome icons */
+.customTools i {
+  font-size: 24px; /* Adjust size */
+  color: white; /* Adjust color */
+  transition: transform 0.2s ease-in-out;
+  z-index: 11;
+}
+
+/* Add hover effect */
+.customTools:hover i {
+  /* transform: scale(1.2); */
+  /* color: rgb(0, 153, 255); */ /* Change color on hover */
+}
+.toolHover{
+  box-shadow: 0px 0px 2px 1px rgb(255, 255, 255),  0px 0px 5px 1px black;
+}
+.toolSelect{
+  box-shadow: 0px 0px 2px 1px rgb(255, 255, 255),  0px 0px 5px 1px rgb(252, 2, 2);
+}
+#brush{
+  top:5%;
+}
+#brushSize{
+  top:20%;
+}
+#erasor{
+  top:35%;
+}
+#redo{
+  top:50%;
+}
+#undo{
+  top:65%;
+}
+#clearCanvas{
+  top:80%;
+}
+#color{
+  top:5%;
+  left:30px;
+}
+#shape{
+  top:20%;
+  left:30px;
+}
+#size{
+
+  width: 140px;
+  height: 50px;
+  background-color: #2A70C2;
+  border-radius: 1em;
+  position: absolute;
+  z-index: 12;
+  top: 0px;
+  left: 0px;
+  display: flex;
+}
+#range{
+  width: 100px;
+  height: 10px;
+  margin: auto;
+}
+.color-container{
+  position: absolute;
+  background-color: #2A70C2;
+  border-radius: 1em;
+  height: fit-content;
+  width: 150px;
+  padding: 1em;
+  top:5%;
+  left:15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap:1em;
+  flex-wrap: wrap;
+}
+.colorValues{
+  width: 45px;
+  aspect-ratio: 1;
+  min-width: 45px;
+  border-radius: 1em;
+}
+#black{background-color: black;}
+#red{background-color: red;}
+#blue{background-color: blue;}
+#green{background-color: green;}
+#yellow{background-color: yellow;}
+#orange{background-color: orange;}
+#shape-container{
+  position: absolute;
+  background-color: #2A70C2;
+  border-radius: 1em;
+  padding: 1em;
+  top:20%;
+  left:15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap:1em;
+  flex-wrap: wrap;
+}
+.shapeValues{
+  width: 50px;
+  aspect-ratio: 1;
+  min-width: 50px;
+  border-radius: 1em;
+  background-color:white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#rectangle{}
+#circle{}
+#shaper{
+  position: absolute;
+  display: none;
+  background-color: transparent;
+  top:0px;
+  left: 0px;
+  
+} 
 
 .dispBtn {
   display: none;

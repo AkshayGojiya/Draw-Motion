@@ -88,7 +88,7 @@
             <div id="drawingBoard" class="">
               <canvas id="drawingCanvas" class="rounded-xl shadow-inner border-2 border-black-900 w-full"></canvas>
               <div id="svg-container"></div>
-              <div id="toolsMenu" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white shadow-lg rounded-xl p-4 space-y-4 w-16">
+              <!-- <div id="toolsMenu" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white shadow-lg rounded-xl p-4 space-y-4 w-16">
                 <button class="tool-btn" data-tool="brush">
                   <i class="fas fa-paint-brush text-purple-600 text-2xl"></i>
                 </button>
@@ -101,16 +101,16 @@
                 <button class="tool-btn" data-tool="settings">
                   <i class="fas fa-sliders-h text-gray-600 text-2xl"></i>
                 </button>
-              </div>
-              <!-- <div id="shaper"></div>
-                <div class="customTools" id="brush"></div>
-                <div class="customTools" id="brushSize"></div>
-                <div class="customTools" id="erasor"></div>
-                <div class="customTools" id="redo"></div>
-                <div class="customTools" id="undo"></div>
-                <div class="customTools" id="clearCanvas"></div>
-                <div class="size" id="size"><input id="range" type="range" min="0" max="100" /></div>
-                <div class="customTools" id="color"></div>
+              </div> -->
+              <div id="shaper"></div>
+                <div class="customTools" id="brush"><i class="fas fa-paint-brush"></i></div>
+                <div class="customTools" id="brushSize"><i class="fas fa-expand-arrows-alt"></i></div>
+                <div class="customTools" id="erasor"><i class="fas fa-eraser"></i></div>
+                <div class="customTools" id="undo"><i class="fas fa-undo"></i></div>
+                <div class="customTools" id="redo"><i class="fas fa-redo"></i></div>
+                <div class="customTools" id="clearCanvas"><i class="fas fa-trash"></i></div>
+                <div class="size" id="size"><input id="range" type="range" min="0" max="100" title="Adjust the value"/></div>
+                <div class="customTools" id="color"><i class="fas fa-palette"></i></div>
                 <div class="color-container" id="color-container">
                     <div class="colorValues" id="black"></div>
                     <div class="colorValues" id="red"></div>
@@ -119,15 +119,15 @@
                     <div class="colorValues" id="yellow"></div>
                     <div class="colorValues" id="orange"></div>
                 </div>
-                <div class="customTools" id="shape"></div>
+                <div class="customTools" id="shape"><i class="fas fa-shapes"></i></div>
                 <div class="shape-container" id="shape-container">
                   <div class="shapeValues" id="rectangle"><div style="width: 30px;height: 30px; border:2px solid black;"></div></div>
                   <div class="shapeValues" id="circle"><div style="width: 30px;height: 30px; border:2px solid black;border-radius: 50%;"></div></div>
-                </div> -->
+                </div>
             </div>
           </div>
         </div>
-
+      </div>
         <!-- Tools Section -->
         <!-- <div class="mt-8 bg-white rounded-2xl shadow-lg p-6">
           <h3 class="text-xl font-semibold mb-4">Drawing Tools</h3>
