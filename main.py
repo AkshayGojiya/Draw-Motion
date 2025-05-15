@@ -9,7 +9,7 @@ mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5, static_image_mode=False)
 mp_draw = mp.solutions.drawing_utils
 
-FRAME_DELAY = 1 / 25  # Target 30 FPS
+FRAME_DELAY = 1 / 25 
 
 for line in sys.stdin:
     start_time = time.time()
@@ -20,7 +20,7 @@ for line in sys.stdin:
     np_arr = np.frombuffer(image_bytes, dtype=np.uint8)
     frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
-    frame = cv2.resize(frame, (640, 480))  # Reduce resolution for faster processing
+    frame = cv2.resize(frame, (640, 480)) 
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(rgb_frame)
 
